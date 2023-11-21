@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 body {
-	max-width: 1200px;
+	max-width: auto;
 	margin: auto;
 	padding: 16px;
 	font-family: 'Montserrat', sans-serif;
@@ -43,6 +43,7 @@ main {
 }
 
 .fiches {
+	flex-direction: column;
 	flex: 1;
 	margin: 8px;
 	display: grid;
@@ -63,6 +64,7 @@ main {
 	margin-top: 4px;
 	margin-bottom: 4px;
 }
+
 .fiches article h2 {
 	text-align: center;
 }

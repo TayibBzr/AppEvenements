@@ -11,7 +11,7 @@ let sectionFiches = document.querySelector(".fiches");
 const updatePage = (valeur) => {
   sectionFiches.innerHTML = "";
   const totalElement = document.createElement("p");
-  totalElement.innerText = valeur.length;
+  totalElement.innerText = `Votre total d'event disponible : ${valeur.length}`;
   sectionFiches.appendChild(totalElement);
   for (let i = 0; i < valeur.length; i++) {
 
