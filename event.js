@@ -7,7 +7,6 @@ const valeurDeData = data.results;
 
 let sectionFiches = document.querySelector(".fiches");
 
-
 // Foction pour créer les fiches produits
 const updatePage = (valeur) => {
   sectionFiches.innerHTML = "";
@@ -48,7 +47,6 @@ const updatePage = (valeur) => {
   }
 };
 
-
 // Fonction pour trier les dates par ordre croissant
 const trierDate = () => {
   sectionFiches.innerHTML = "";
@@ -61,7 +59,6 @@ const trierDate = () => {
   updatePage(dateOrdre);
 };
 
-
 // Fonction pour filtrer les event qui ne sont pas en janvier
 const daterange = () => {
   const start = "2023-01-00";
@@ -72,7 +69,6 @@ const daterange = () => {
   sectionFiches.innerHTML = "";
   updatePage(dateJanvier);
 };
-
 
 // Fonction pour que les filtres fonctionne ensemble
 const tousLesFiltres = () => {
@@ -99,7 +95,6 @@ const tousLesFiltres = () => {
   updatePage(resultatsFiltres);
 };
 
-
 // Fonction qui sert à executer les fonction "tousLesFiltres" en appuyant sur la touche entrée
 const keyDown = (event) => {
   if (event.code === "Enter" || event.keyCode === 13) {
@@ -119,7 +114,6 @@ const moteur = () => {
   updatePage(recherche);
   console.log(saisi);
 };
-
 
 // Différents éléments qui utilisent des fonctions
 const boutonTrierDate = document.getElementById("btn-date");
