@@ -7,6 +7,8 @@ const valeurDeData = data.results;
 
 let sectionFiches = document.querySelector(".fiches");
 
+
+// Foction pour créer les fiches produits
 const updatePage = (valeur) => {
   sectionFiches.innerHTML = "";
   for (let i = 0; i < valeur.length; i++) {
@@ -46,6 +48,8 @@ const updatePage = (valeur) => {
   }
 };
 
+
+// Fonction pour trier les dates par ordre croissant
 const trierDate = () => {
   sectionFiches.innerHTML = "";
   const dateOrdre = Array.from(valeurDeData);
@@ -57,6 +61,8 @@ const trierDate = () => {
   updatePage(dateOrdre);
 };
 
+
+// Fonction pour filtrer les event qui ne sont pas en janvier
 const daterange = () => {
   const start = "2023-01-00";
   const end = "2023-01-31";
@@ -67,33 +73,55 @@ const daterange = () => {
   updatePage(dateJanvier);
 };
 
-const keyword = () => {
+
+// Fonction pour que les filtres fonctionne ensemble
+const tousLesFiltres = () => {
   const saisi = document.getElementById("keyword").value.toLowerCase();
-  const motsCle = valeurDeData.filter((mot) => mot.keywords_fr.toLowerCase().includes(saisi));
+  const region = document.getElementById("location").value;
+  const date = document.getElementById("dateChoix").value;
+  let resultatsFiltres = valeurDeData;
+  if (saisi) {
+    resultatsFiltres = resultatsFiltres.filter((mot) =>
+      mot.keywords_fr.includes(saisi)
+    );
+  }
+  if (region) {
+    resultatsFiltres = resultatsFiltres.filter(
+      (reg) => reg.location_region === region
+    );
+  }
+  if (date) {
+    resultatsFiltres = resultatsFiltres.filter((d) =>
+      d.firstdate_begin.includes(date)
+    );
+  }
   sectionFiches.innerHTML = "";
-  updatePage(motsCle);
-  console.log(saisi);
-  console.log(motsCle);
+  updatePage(resultatsFiltres);
 };
 
-const location = () => {
-  const region = document.getElementById("location").toLowerCase().value;
-  const loc = valeurDeData.filter((reg) => reg.location_region === region);
-  sectionFiches.innerHTML = "";
-  updatePage(loc);
-  console.log(region);
-  console.log(loc);
+
+// Fonction qui sert à executer les fonction "tousLesFiltres" en appuyant sur la touche entrée
+const keyDown = (event) => {
+  if (event.code === "Enter" || event.keyCode === 13) {
+    tousLesFiltres();
+  }
 };
 
-const dateStart = () => {
-  const date = document.getElementById("dateChoix").toLowerCase().value;
-  const dateFiltre = valeurDeData.filter((d) =>
-    d.firstdate_begin.includes(date)
+// Fonction pour le moteur de recherche
+const moteur = () => {
+  const saisi = document
+    .getElementById("moteurDeRecherche")
+    .value.toLowerCase();
+  const recherche = valeurDeData.filter((mot) =>
+    mot.title_fr.toLowerCase().includes(saisi)
   );
   sectionFiches.innerHTML = "";
-  updatePage(dateFiltre);
+  updatePage(recherche);
+  console.log(saisi);
 };
 
+
+// Différents éléments qui utilisent des fonctions
 const boutonTrierDate = document.getElementById("btn-date");
 boutonTrierDate.addEventListener("click", trierDate);
 
@@ -105,36 +133,20 @@ boutonDefault.addEventListener("click", () => {
 const boutonJanvier = document.getElementById("btn-janvier");
 boutonJanvier.addEventListener("click", daterange);
 
-const motSaisi = document.getElementById("keyword");
-motSaisi.addEventListener("keydown", () => {
-  if (event.code === "Enter" || event.keyCode === 13) {
-    keyword();
-  }
-});
-
-const locationSaisi = document.getElementById("location");
-locationSaisi.addEventListener("keydown", () => {
-  if (event.code === "Enter" || event.keyCode === 13) {
-    location();
-  }
-});
-
-const boutonFiltreDate = document.getElementById("dateChoix");
-boutonFiltreDate.addEventListener("input", dateStart);
-
-updatePage(valeurDeData);
-
-const moteur = () => {
-  const saisi = document.getElementById("moteurDeRecherche").value.toLowerCase();
-  const recherche = valeurDeData.filter((mot) => mot.title_fr.toLowerCase().includes(saisi));
-  sectionFiches.innerHTML = "";
-  updatePage(recherche);
-  console.log(saisi);
-};
-
 const rechercheSaisi = document.getElementById("moteurDeRecherche");
 rechercheSaisi.addEventListener("keydown", () => {
   if (event.code === "Enter" || event.keyCode === 13) {
     moteur();
   }
 });
+
+const motSaisi = document.getElementById("keyword");
+motSaisi.addEventListener("keydown", keyDown);
+
+const locationSaisi = document.getElementById("location");
+locationSaisi.addEventListener("keydown", keyDown);
+
+const boutonFiltreDate = document.getElementById("dateChoix");
+boutonFiltreDate.addEventListener("input", tousLesFiltres);
+
+updatePage(valeurDeData);
