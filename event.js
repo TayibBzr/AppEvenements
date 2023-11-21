@@ -10,7 +10,11 @@ let sectionFiches = document.querySelector(".fiches");
 // Fonction pour créer les fiches produits
 const updatePage = (valeur) => {
   sectionFiches.innerHTML = "";
+  const totalElement = document.createElement("p");
+  totalElement.innerText = valeur.length;
+  sectionFiches.appendChild(totalElement);
   for (let i = 0; i < valeur.length; i++) {
+
     const evenement = valeur[i];
     const eventElement = document.createElement("article");
 
