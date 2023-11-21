@@ -7,33 +7,33 @@ const valeurDeData = data.results;
 
 let sectionFiches = document.querySelector(".fiches");
 
-// Foction pour créer les fiches produits
+// Fonction pour créer les fiches produits
 const updatePage = (valeur) => {
   sectionFiches.innerHTML = "";
   for (let i = 0; i < valeur.length; i++) {
-    const articles = valeur[i];
+    const evenement = valeur[i];
     const eventElement = document.createElement("article");
 
     const titleElement = document.createElement("h2");
-    titleElement.innerText = articles.title_fr;
+    titleElement.innerText = evenement.title_fr;
 
     const imageElement = document.createElement("img");
-    imageElement.src = articles.originalimage;
+    imageElement.src = evenement.originalimage;
 
     const descriptionElement = document.createElement("p");
-    descriptionElement.innerText = articles.description_fr;
+    descriptionElement.innerText = evenement.description_fr;
 
     const daterangeElement = document.createElement("p");
-    daterangeElement.innerText = articles.daterange_fr;
+    daterangeElement.innerText = evenement.daterange_fr;
 
     const keywordElement = document.createElement("p");
-    keywordElement.innerText = articles.keywords_fr;
+    keywordElement.innerText = evenement.keywords_fr;
 
     const adresseElement = document.createElement("p");
-    adresseElement.innerText = articles.location_address;
+    adresseElement.innerText = evenement.location_address;
 
     const regionElement = document.createElement("p");
-    regionElement.innerText = articles.location_region;
+    regionElement.innerText = evenement.location_region;
 
     sectionFiches.appendChild(eventElement);
 
@@ -72,13 +72,13 @@ const daterange = () => {
 
 // Fonction pour que les filtres fonctionne ensemble
 const tousLesFiltres = () => {
-  const saisi = document.getElementById("keyword").value.toLowerCase();
+  const keyword = document.getElementById("keyword").value.toLowerCase();
   const region = document.getElementById("location").value;
   const date = document.getElementById("dateChoix").value;
   let resultatsFiltres = valeurDeData;
-  if (saisi) {
+  if (keyword) {
     resultatsFiltres = resultatsFiltres.filter((mot) =>
-      mot.keywords_fr.includes(saisi)
+      mot.keywords_fr.includes(keyword)
     );
   }
   if (region) {
