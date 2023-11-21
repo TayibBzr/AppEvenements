@@ -68,8 +68,8 @@ const daterange = () => {
 };
 
 const keyword = () => {
-  const saisi = document.getElementById("keyword").value;
-  const motsCle = valeurDeData.filter((mot) => mot.keywords_fr.includes(saisi));
+  const saisi = document.getElementById("keyword").value.toLowerCase();
+  const motsCle = valeurDeData.filter((mot) => mot.keywords_fr.toLowerCase().includes(saisi));
   sectionFiches.innerHTML = "";
   updatePage(motsCle);
   console.log(saisi);
@@ -77,7 +77,7 @@ const keyword = () => {
 };
 
 const location = () => {
-  const region = document.getElementById("location").value;
+  const region = document.getElementById("location").toLowerCase().value;
   const loc = valeurDeData.filter((reg) => reg.location_region === region);
   sectionFiches.innerHTML = "";
   updatePage(loc);
@@ -85,10 +85,17 @@ const location = () => {
   console.log(loc);
 };
 
+const dateStart = () => {
+  const date = document.getElementById("dateChoix").toLowerCase().value;
+  const dateFiltre = valeurDeData.filter((d) =>
+    d.firstdate_begin.includes(date)
+  );
+  sectionFiches.innerHTML = "";
+  updatePage(dateFiltre);
+};
+
 const boutonTrierDate = document.getElementById("btn-date");
-boutonTrierDate.addEventListener("click", () => {
-  trierDate();
-});
+boutonTrierDate.addEventListener("click", trierDate);
 
 const boutonDefault = document.getElementById("btn-default");
 boutonDefault.addEventListener("click", () => {
@@ -96,9 +103,7 @@ boutonDefault.addEventListener("click", () => {
 });
 
 const boutonJanvier = document.getElementById("btn-janvier");
-boutonJanvier.addEventListener("click", () => {
-  daterange();
-});
+boutonJanvier.addEventListener("click", daterange);
 
 const motSaisi = document.getElementById("keyword");
 motSaisi.addEventListener("keydown", () => {
@@ -114,8 +119,22 @@ locationSaisi.addEventListener("keydown", () => {
   }
 });
 
-
-
-
+const boutonFiltreDate = document.getElementById("dateChoix");
+boutonFiltreDate.addEventListener("input", dateStart);
 
 updatePage(valeurDeData);
+
+const moteur = () => {
+  const saisi = document.getElementById("moteurDeRecherche").value.toLowerCase();
+  const recherche = valeurDeData.filter((mot) => mot.title_fr.toLowerCase().includes(saisi));
+  sectionFiches.innerHTML = "";
+  updatePage(recherche);
+  console.log(saisi);
+};
+
+const rechercheSaisi = document.getElementById("moteurDeRecherche");
+rechercheSaisi.addEventListener("keydown", () => {
+  if (event.code === "Enter" || event.keyCode === 13) {
+    moteur();
+  }
+});
